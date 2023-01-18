@@ -6,11 +6,13 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from tic_tac_toe.game.players import Player
     from tic_tac_toe.logic.models import GameState, Grid, Mark
 
 import re
 
 from tic_tac_toe.logic.exceptions import InvalidGameState
+
 
 def validate_grid(grid: Grid) -> None:
     if not re.match(r"[\sXO]$", grid.cells):
@@ -19,7 +21,7 @@ def validate_grid(grid: Grid) -> None:
 
 def validate_game_state(game_state: GameState) -> None:
     validate_number_of_marks(game_state.grid)
-    validate_starting_mark(game_state.grid,game_state.starting_mark)
+    validate_starting_mark(game_state.grid, game_state.starting_mark)
     validate_winner(
         game_state.grid, game_state.starting_mark, game_state.winner
     )
@@ -56,3 +58,8 @@ def validate_winner(
         else:
             if grid.o_count != grid.x_count:
                 raise InvalidGameState("Wrong Number of Os")
+
+
+def validate_players(player1: Player, player2: Player) -> None:
+    if player1.mark is player2.mark:
+        raise ValueError("Players have to use different marks")
