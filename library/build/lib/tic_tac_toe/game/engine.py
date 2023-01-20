@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import Callable, TypeAlias
 
 from tic_tac_toe.game.players import Player
-from tic_tac_toe.game.renderers import Renderer
+from tic_tac_toe.game.players import Renderer
 from tic_tac_toe.logic.exceptions import InvalidMove
 from tic_tac_toe.logic.models import GameState, Grid, Mark
 from tic_tac_toe.logic.validators import validate_players
