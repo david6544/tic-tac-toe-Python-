@@ -24,7 +24,7 @@ def clear_screen() -> None:
 
 
 def blink(text: str) -> str:
-    return f"\033[5,{text}\033[0m"
+    return f"\033[5m,{text}\033[0m"
 
 
 def print_blinking(cells: Iterable[str], positions: Iterable[int]) -> None:
@@ -38,13 +38,13 @@ def print_solid(cells: Iterable[str]) -> None:
     print(
         textwrap.dedent(
             """\
-                 A   B   C
-               ------------
-            1 ┆  {0} │ {1} │ {2}
-              ┆ ───┼───┼───
-            2 ┆  {3} │ {4} │ {5}
-              ┆ ───┼───┼───
-            3 ┆  {6} │ {7} │ {8}
-            """
+             A   B   C
+           ------------
+        1 ┆  {0} │ {1} │ {2}
+          ┆ ───┼───┼───
+        2 ┆  {3} │ {4} │ {5}
+          ┆ ───┼───┼───
+        3 ┆  {6} │ {7} │ {8}
+    """
         ).format(*cells)
     )

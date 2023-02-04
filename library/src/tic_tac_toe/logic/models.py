@@ -1,7 +1,5 @@
 # tic_tac_toe/logic/models.py
 
-from __future__ import annotations
-
 import enum
 import re
 from dataclasses import dataclass
@@ -12,23 +10,23 @@ from tic_tac_toe.logic.validators import validate_game_state,validate_grid
 
 
 WINNING_PATTERNS = (
-    "???......"
-    "...???..."
-    "......???"
-    "?..?..?.."
-    ".?..?..?."
-    "..?..?..?"
-    "?...?...?"
-    "..?.?.?.."
+    "???......",
+    "...???...",
+    "......???",
+    "?..?..?..",
+    ".?..?..?.",
+    "..?..?..?",
+    "?...?...?",
+    "..?.?.?..",
 )
 
 
-class Mark(enum.StrEnum):
+class Mark(str, enum.Enum):
     CROSS = "X"
     NAUGHT = "O"
 
     @property
-    def other(self) -> Mark:
+    def other(self) -> "Mark":
         return Mark.CROSS if self is Mark.NAUGHT else Mark.NAUGHT
 
 
@@ -91,7 +89,7 @@ class GameState:
     def winner(self) -> Mark | None:
         for pattern in WINNING_PATTERNS:
             for mark in Mark:
-                if re.match(pattern.replace("?",mark), self.grid.cels):
+                if re.match(pattern.replace("?", mark), self.grid.cells):
                     return mark
         return None
 
@@ -99,22 +97,21 @@ class GameState:
     def winning_cells(self) -> list[int]:
         for pattern in WINNING_PATTERNS:
             for mark in Mark:
-                if re.match(pattern.replace("?",mark), self.grid.cels):
+                if re.match(pattern.replace("?", mark), self.grid.cells):
                     return [
-                        match.start()
-                        for match in re.finditer(r"\?", pattern)
+                        match.start() for match in re.finditer(r"\?", pattern)
                     ]
         return []
 
     @cached_property
-    def possible_moves(self)-> list[Move]:
+    def possible_moves(self) -> list[Move]:
         moves = []
         if not self.game_over:
             for match in re.finditer(r"\s", self.grid.cells):
                 moves.append(self.make_move_to(match.start()))
         return moves
 
-    def make_move_to(self, index:int) -> Move:
+    def make_move_to(self, index: int) -> Move:
         if self.grid.cells[index] != " ":
             raise InvalidMove("Cell is not empty")
         return Move(
@@ -125,7 +122,7 @@ class GameState:
                 Grid(
                     self.grid.cells[:index]
                     + self.current_mark
-                    + self.grid.cells[index + 1:]
+                    + self.grid.cells[index + 1 :]
                 ),
                 self.starting_mark,
             ),

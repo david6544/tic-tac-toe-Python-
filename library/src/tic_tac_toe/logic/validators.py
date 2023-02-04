@@ -15,7 +15,7 @@ from tic_tac_toe.logic.exceptions import InvalidGameState
 
 
 def validate_grid(grid: Grid) -> None:
-    if not re.match(r"[\sXO]$", grid.cells):
+    if not re.match(r"[\sXO]{9}$", grid.cells):
         raise ValueError("Must contain 9 cells of: X, O, or space")
 
 
@@ -47,10 +47,10 @@ def validate_winner(
     if winner == "X":
         if starting_mark == "X":
             if grid.x_count <= grid.o_count:
-                raise InvalidGameState("Wrong Number of Xs")
+                raise InvalidGameState("Wrong number of Xs")
         else:
             if grid.x_count != grid.o_count:
-                raise InvalidGameState("Wrong Number of Xs")
+                raise InvalidGameState("Wrong number of Xs")
     elif winner == "O":
         if starting_mark == "O":
             if grid.o_count <= grid.x_count:
