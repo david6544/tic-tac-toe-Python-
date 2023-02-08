@@ -14,11 +14,14 @@ import re
 from tic_tac_toe.logic.exceptions import InvalidGameState
 
 
+# makes sure the grid is built properly
 def validate_grid(grid: Grid) -> None:
     if not re.match(r"[\sXO]{9}$", grid.cells):
         raise ValueError("Must contain 9 cells of: X, O, or space")
 
 
+# validates the current state by checking number of marks based upon the start,
+# also checks the winner
 def validate_game_state(game_state: GameState) -> None:
     validate_number_of_marks(game_state.grid)
     validate_starting_mark(game_state.grid, game_state.starting_mark)
@@ -26,12 +29,13 @@ def validate_game_state(game_state: GameState) -> None:
         game_state.grid, game_state.starting_mark, game_state.winner
     )
 
-
+# counts how many marks on each side have been made
 def validate_number_of_marks(grid: Grid) -> None:
     if abs(grid.x_count - grid.o_count) > 1:
         raise InvalidGameState("Wrong number of Xs and Os")
 
 
+# validates who went first
 def validate_starting_mark(grid: Grid, starting_mark: Mark) -> None:
     if grid.x_count > grid.o_count:
         if starting_mark != "X":
@@ -40,7 +44,8 @@ def validate_starting_mark(grid: Grid, starting_mark: Mark) -> None:
         if starting_mark != "O":
             raise InvalidGameState("Wrong Starting Mark")
 
-
+# makes sure the winner won in the correct fasion based upon the starting mark
+# and the current marks placed
 def validate_winner(
         grid: Grid, starting_mark: Mark, winner: Mark | None
 ) -> None:
@@ -60,6 +65,7 @@ def validate_winner(
                 raise InvalidGameState("Wrong Number of Os")
 
 
+# Validates the players have to use different marks (irrelevant in later development stage)
 def validate_players(player1: Player, player2: Player) -> None:
     if player1.mark is player2.mark:
         raise ValueError("Players have to use different marks")

@@ -7,6 +7,7 @@ from tic_tac_toe.logic.models import Mark
 from console.players import ConsolePlayer
 from console.renderers import ConsoleRenderer
 
+# sets the console player and random computer player if running play.py
 player1 = ConsolePlayer(Mark("X"))
 player2 = RandomComputerPlayer(Mark("O"))
 

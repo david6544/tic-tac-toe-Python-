@@ -6,6 +6,8 @@ from tic_tac_toe.logic.models import Mark
 
 from .players import ConsolePlayer
 
+
+# sets up the various player classes
 PLAYER_CLASSES = {
     "human": ConsolePlayer,
     "random": RandomComputerPlayer,
@@ -13,12 +15,14 @@ PLAYER_CLASSES = {
 }
 
 
+# a tuple to hold the player and their mark
 class Args(NamedTuple):
     player1: Player
     player2: Player
     starting_mark: Mark
 
 
+# arguments for each individual type of player
 def parse_args() -> Args:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -45,6 +49,7 @@ def parse_args() -> Args:
     player1 = PLAYER_CLASSES[args.player_x](Mark("X"))
     player2 = PLAYER_CLASSES[args.player_o](Mark("O"))
 
+    # swaps starting mark based upon player selection
     if args.starting_mark == "O":
         player1, player2 = player2, player1
 
