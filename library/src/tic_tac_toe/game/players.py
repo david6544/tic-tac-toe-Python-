@@ -57,21 +57,26 @@ class RandomComputerPlayer(ComputerPlayer):
 
     # minimax computer player type, makes unbeatable moves by
     # either making a random move to start or finding the best move
+
+    #Simple Minimax (No random move first)
 class MinimaxPlayerV1(ComputerPlayer):
     def get_computer_move(self, game_state: GameState) -> Move | None:
         return find_best(game_state)
         
+    # Minimax + Alpha_beta (No random move first)
 class MinimaxPlayerV2(ComputerPlayer):
     def get_computer_move(self, game_state: GameState) -> Move | None:
         return find_best_optimized(game_state)
     
+    # Random move first with AlphaBeta and Minimax
 class MinimaxPlayerV3(ComputerPlayer):
     def get_computer_move(self, game_state: GameState) -> Move | None:
         if game_state.game_not_started:
             return game_state.make_random_move()
         else:
             return find_best_optimized(game_state)
-        
+    
+    # Precomputed Movelist
 class MinimaxPlayerV4(ComputerPlayer):
     def get_computer_move(self, game_state: GameState) -> Move | None:
         if game_state.game_not_started:
@@ -79,4 +84,5 @@ class MinimaxPlayerV4(ComputerPlayer):
         else:
             return find_best_precomputed(game_state)
         
+#Set which version of minimax the program will use
 MinimaxPlayer = MinimaxPlayerV4
